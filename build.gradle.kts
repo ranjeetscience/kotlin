@@ -478,3 +478,42 @@ fun Project.configureJvmProject(javaHome: String, javaVersion: String) {
         executable = File(javaHome, "bin/java").canonicalPath
     }
 }
+
+tasks.create("validateArtifacts").doLast {
+    val rulesViolations = hashMapOf<Project, MutableList<String>>()
+    fun registerRuleViolation(project: Project, violation: String) {
+        rulesViolations.getOrPut(project) { arrayListOf() }.add(violation)
+    }
+
+    for (project in allprojects) {
+        if (project.tasks.findByName("publish") == null) continue
+
+        val archives = project.configurations.getByName("archives")
+        val namedArtifacts = archives.allArtifacts.groupBy { it.name }
+
+        for ((name, artifacts) in namedArtifacts) {
+            val classifiedArtifacts = artifacts.groupBy { it.classifier }
+            if ("sources" !in classifiedArtifacts) {
+                registerRuleViolation(project, "sources.jar is missing")
+            }
+            if ("javadoc" !in classifiedArtifacts) {
+                registerRuleViolation(project, "javadoc.jar is missing")
+            }
+            for ((classifier, artifactsWithClassifier) in classifiedArtifacts) {
+                if (artifactsWithClassifier.none { it is Signature }) {
+                    registerRuleViolation(project, "$name:$classifier is not signed")
+                }
+            }
+        }
+    }
+
+    if (rulesViolations.isNotEmpty()) {
+        val err = buildString {
+            for ((project, violations) in rulesViolations.entries.sortedBy { it.key.path }) {
+                appendln(project.path)
+                violations.forEach { appendln("    $it") }
+            }
+        }
+        throw IllegalStateException("Publishing rules are violated: \n$err")
+    }
+}
