@@ -54,15 +54,12 @@ fun makeIncrementally(
     val rootsWalk = sourceRoots.asSequence().flatMap { it.walk() }
     val files = rootsWalk.filter(File::isFile)
     val sourceFiles = files.filter { it.extension.toLowerCase() in allExtensions }.toList()
-    val kotlinFiles = sourceFiles.filter { it.extension.toLowerCase() in kotlinExtensions }
 
     withIC {
         val compiler = IncrementalJvmCompilerRunner(cachesDir,
                                                     sourceRoots.map { JvmSourceRoot(it, null) }.toSet(),
                                                     versions, reporter)
-        compiler.compile(kotlinFiles, args, messageCollector) {
-            it.inputsCache.sourceSnapshotMap.compareAndUpdate(sourceFiles)
-        }
+        compiler.compile(sourceFiles, args, messageCollector, providedChangedFiles = null)
     }
 }
 
