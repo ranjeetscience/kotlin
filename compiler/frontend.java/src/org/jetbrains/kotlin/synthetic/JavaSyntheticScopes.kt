@@ -16,21 +16,25 @@
 
 package org.jetbrains.kotlin.synthetic
 
+import com.intellij.openapi.project.Project
 import org.jetbrains.kotlin.load.java.components.SamConversionResolver
 import org.jetbrains.kotlin.resolve.DeprecationResolver
 import org.jetbrains.kotlin.resolve.scopes.SyntheticScopes
 import org.jetbrains.kotlin.storage.StorageManager
+import org.jetbrains.kotlin.synthetic.extensions.SyntheticScopeProviderExtension
 
 class JavaSyntheticScopes(
         storageManager: StorageManager,
         samConventionResolver: SamConversionResolver,
-        deprecationResolver: DeprecationResolver
-): SyntheticScopes {
-    override val scopeProviders = listOf(
-            CompatSyntheticsProvider(storageManager),
-            JavaSyntheticPropertiesProvider(storageManager),
-            SamAdapterSyntheticMembersProvider(storageManager, samConventionResolver, deprecationResolver),
-            SamAdapterSyntheticStaticFunctionsProvider(storageManager, samConventionResolver),
-            SamAdapterSyntheticConstructorsProvider(storageManager, samConventionResolver)
-    )
+        deprecationResolver: DeprecationResolver,
+        project: Project
+) : SyntheticScopes {
+    override val scopeProviders =
+            SyntheticScopeProviderExtension.getInstances(project).map { it.getProvider(storageManager) } +
+            listOf(
+                    JavaSyntheticPropertiesProvider(storageManager),
+                    SamAdapterSyntheticMembersProvider(storageManager, samConventionResolver, deprecationResolver),
+                    SamAdapterSyntheticStaticFunctionsProvider(storageManager, samConventionResolver),
+                    SamAdapterSyntheticConstructorsProvider(storageManager, samConventionResolver)
+            )
 }

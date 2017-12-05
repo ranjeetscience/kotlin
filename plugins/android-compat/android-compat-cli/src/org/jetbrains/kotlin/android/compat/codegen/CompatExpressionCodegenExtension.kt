@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package org.jetbrains.kotlin.codegen.extensions
+package org.jetbrains.kotlin.android.compat.codegen
 
+import org.jetbrains.kotlin.android.compat.scope.CompatSyntheticFunctionDescriptor
 import org.jetbrains.kotlin.builtins.KotlinBuiltIns
 import org.jetbrains.kotlin.codegen.*
+import org.jetbrains.kotlin.codegen.extensions.ExpressionCodegenExtension
 import org.jetbrains.kotlin.load.java.sam.SamAdapterDescriptor
 import org.jetbrains.kotlin.resolve.calls.model.ResolvedCall
-import org.jetbrains.kotlin.synthetic.CompatSyntheticFunctionDescriptor
 import org.jetbrains.kotlin.synthetic.SamAdapterExtensionFunctionDescriptor
 import org.jetbrains.kotlin.synthetic.SyntheticJavaPropertyDescriptor
 import org.jetbrains.org.objectweb.asm.Type

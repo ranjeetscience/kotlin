@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.kotlin.synthetic
+package org.jetbrains.kotlin.android.compat.scope
 
 import org.jetbrains.kotlin.descriptors.*
 import org.jetbrains.kotlin.descriptors.annotations.Annotations
@@ -33,6 +33,7 @@ import org.jetbrains.kotlin.resolve.scopes.SyntheticResolutionScope
 import org.jetbrains.kotlin.resolve.scopes.SyntheticScopeProvider
 import org.jetbrains.kotlin.resolve.scopes.SyntheticScopesMetadata
 import org.jetbrains.kotlin.storage.StorageManager
+import org.jetbrains.kotlin.synthetic.extensions.SyntheticScopeProviderExtension
 import org.jetbrains.kotlin.types.KotlinType
 import org.jetbrains.kotlin.types.checker.KotlinTypeChecker
 import org.jetbrains.kotlin.types.typeUtil.isInterface
@@ -293,6 +294,10 @@ class CompatSyntheticsProvider(storageManager: StorageManager) : SyntheticScopeP
             else -> scope
         }
     }
+}
+
+object CompatSyntheticsProviderExtension: SyntheticScopeProviderExtension {
+    override fun getProvider(storageManager: StorageManager): SyntheticScopeProvider = CompatSyntheticsProvider(storageManager)
 }
 
 private fun shadowOriginalFunctions(
