@@ -211,11 +211,13 @@ internal open class ScopeBasedTowerLevel protected constructor(
         scopeTower: ImplicitScopeTower,
         private val resolutionScope: ResolutionScope
 ) : AbstractScopeTowerLevel(scopeTower) {
+    private val syntheticScopes = scopeTower.syntheticScopes
 
     internal constructor(scopeTower: ImplicitScopeTower, lexicalScope: LexicalScope) : this(scopeTower, lexicalScope as ResolutionScope)
 
     override fun getVariables(name: Name, extensionReceiver: ReceiverValueWithSmartCastInfo?): Collection<CandidateWithBoundDispatchReceiver>
-            = resolutionScope.getContributedVariables(name, location).map {
+            = syntheticScopes.provideSyntheticScope(resolutionScope, SyntheticScopesMetadata(needStaticFields = true))
+            .getContributedVariables(name, location).map {
                 createCandidateDescriptor(it, dispatchReceiver = null)
             }
 
