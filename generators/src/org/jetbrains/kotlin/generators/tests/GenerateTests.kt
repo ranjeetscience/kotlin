@@ -16,6 +16,7 @@
 
 package org.jetbrains.kotlin.generators.tests
 
+import org.jetbrains.android.compat.AbstractAndroidCompatBoxTest
 import org.jetbrains.kotlin.AbstractDataFlowValueRenderingTest
 import org.jetbrains.kotlin.addImport.AbstractAddImportTest
 import org.jetbrains.kotlin.allopen.AbstractBytecodeListingTestForAllOpen
@@ -937,6 +938,12 @@ fun main(args: Array<String>) {
 
         testClass<AbstractParcelBytecodeListingTest> {
             model("parcel/codegen")
+        }
+    }
+
+    testGroup("plugins/android-compat/android-compat-cli/test", "plugins/android-compat/android-compat-cli/testData") {
+        testClass<AbstractAndroidCompatBoxTest> {
+            model("box")
         }
     }
 

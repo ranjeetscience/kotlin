@@ -12,6 +12,14 @@ dependencies {
     compile(project(":compiler:frontend"))
     compile(project(":compiler:frontend.java"))
     compile(project(":compiler:backend"))
+
+    testCompile(project(":compiler:util"))
+    testCompile(project(":compiler:backend"))
+    testCompile(project(":compiler:cli"))
+    testCompile(project(":compiler:tests-common"))
+    testCompile(projectTests(":compiler:tests-common"))
+    testCompile(projectDist(":kotlin-test:kotlin-test-jvm"))
+    testCompile(commonDep("junit:junit"))
 }
 
 sourceSets {
@@ -24,3 +32,5 @@ dist()
 ideaPlugin()
 
 testsJar {}
+
+projectTest { workingDir = rootDir }
