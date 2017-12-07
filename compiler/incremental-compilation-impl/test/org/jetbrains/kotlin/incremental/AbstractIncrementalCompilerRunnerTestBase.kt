@@ -117,7 +117,7 @@ abstract class AbstractIncrementalCompilerRunnerTestBase<Args : CommonCompilerAr
         sb.appendLine("================ Step #$step =================")
         sb.appendLine()
         sb.appendLine("Compiling files:")
-        ktSources.toSet().toTypedArray().sortedArray().forEach { sb.appendLine("    $it") }
+        ktSources.toSet().toTypedArray().sortedArray().forEach { sb.appendLine("  $it") }
         sb.appendLine("End of files")
         sb.appendLine("Exit code: ${if (errors.isEmpty()) "OK" else "ABORT"}")
 

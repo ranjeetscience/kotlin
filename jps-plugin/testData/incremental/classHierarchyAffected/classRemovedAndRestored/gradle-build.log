@@ -1,11 +1,11 @@
 ================ Step #1 =================
 
 Compiling files:
-    src/B.kt
-    src/createA.kt
-    src/createB.kt
-    src/useAfoo.kt
-    src/useBbar.kt
+  src/B.kt
+  src/createA.kt
+  src/createB.kt
+  src/useAfoo.kt
+  src/useBbar.kt
 End of files
 Exit code: ABORT
 ------------------------------------------
@@ -16,19 +16,19 @@ Unresolved reference: A
 ================ Step #2 =================
 
 Compiling files:
-    src/A.kt
-    src/B.kt
-    src/createA.kt
-    src/createB.kt
-    src/useAfoo.kt
-    src/useBbar.kt
+  src/A.kt
+  src/B.kt
+  src/createA.kt
+  src/createB.kt
+  src/useAfoo.kt
+  src/useBbar.kt
 End of files
 Exit code: OK
 
 ================ Step #3 =================
 
 Compiling files:
-    src/failCompilation.kt
+  src/failCompilation.kt
 End of files
 Exit code: ABORT
 ------------------------------------------
