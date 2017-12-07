@@ -189,7 +189,7 @@ open class IncrementalJvmCache(
             internalNameToSource.remove(it.internalName)
         }
 
-        removeAllFromClassStorage(dirtyClasses.map { it.fqNameForClassNameWithoutDollars })
+        removeAllFromClassStorage(dirtyClasses.map { it.fqNameForClassNameWithoutDollars }, changesCollector)
         dirtyOutputClassesMap.clean()
     }
 
