@@ -109,7 +109,7 @@ data class DirtyData(
 )
 
 fun ChangesCollector.getDirtyData(
-        caches: Iterable<IncrementalCacheCommon>,
+        caches: Iterable<IncrementalCacheCommon<*>>,
         reporter: ICReporter
 ): DirtyData {
     val dirtyLookupSymbols = HashSet<LookupSymbol>()
@@ -163,7 +163,7 @@ fun mapLookupSymbolsToFiles(
 }
 
 fun mapClassesFqNamesToFiles(
-        caches: Iterable<IncrementalCacheCommon>,
+        caches: Iterable<IncrementalCacheCommon<*>>,
         classesFqNames: Iterable<FqName>,
         reporter: ICReporter,
         excludes: Set<File> = emptySet()
@@ -185,7 +185,7 @@ fun mapClassesFqNamesToFiles(
 
 fun withSubtypes(
         typeFqName: FqName,
-        caches: Iterable<IncrementalCacheCommon>
+        caches: Iterable<IncrementalCacheCommon<*>>
 ): Set<FqName> {
     val types = LinkedList(listOf(typeFqName))
     val subtypes = hashSetOf<FqName>()
